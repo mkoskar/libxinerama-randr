@@ -23,7 +23,7 @@ shall not be used in advertising or otherwise to promote the sale, use or other
 dealings in this Software without prior written authorization from Digital
 Equipment Corporation.
 ******************************************************************/
-/* $XFree86$ */
+/* $XFree86: xc/lib/Xinerama/Xinerama.c,v 1.3 2002/10/16 00:37:31 dawes Exp $ */
 
 #define NEED_EVENTS
 #define NEED_REPLIES
