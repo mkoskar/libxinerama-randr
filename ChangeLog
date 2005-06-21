@@ -1,0 +1,7 @@
+2005-06-21  Alexander Gottwald  <ago at freedesktop dot org>
+
+	* configure.ac
+	* src/Makefile.am
+	Add missing xext.pc and xextproto.pc
+	Add DEPS_CFLAGS to Makefile.am
+
