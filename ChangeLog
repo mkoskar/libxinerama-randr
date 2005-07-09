@@ -1,3 +1,10 @@
+2005-07-08  Keith Packard  <keithp@keithp.com>
+
+	* .cvsignore:
+	* src/.cvsignore:
+	Add .cvsignore files
+	Switch _la_CFLAGS for AM_CFLAGS to clean up directory
+
 2005-06-21  Alexander Gottwald  <ago at freedesktop dot org>
 
 	* configure.ac
