@@ -1,4 +1,3 @@
-
 dnl  Copyright 2005 Red Hat, Inc.
 dnl 
 dnl  Permission to use, copy, modify, distribute, and sell this software and its
@@ -23,7 +22,7 @@ dnl Process this file with autoconf to create configure.
 
 AC_PREREQ([2.57])
 
-AC_INIT(libXinerama, 7.0.0, [sandmann@redhat.com], libXinerama)
+AC_INIT(libXinerama, 1.1.0, [sandmann@redhat.com], libXinerama)
 AM_INIT_AUTOMAKE([dist-bzip2])
 AM_MAINTAINER_MODE
 
