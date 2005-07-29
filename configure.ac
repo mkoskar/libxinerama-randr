@@ -22,7 +22,7 @@ dnl Process this file with autoconf to create configure.
 
 AC_PREREQ([2.57])
 
-AC_INIT(libXinerama, 1.1.0, [sandmann@redhat.com], libXinerama)
+AC_INIT(libXinerama, 0.99.0, [https://bugs.freedesktop.org/enter_bug.cgi?product=xorg], libXinerama)
 AM_INIT_AUTOMAKE([dist-bzip2])
 AM_MAINTAINER_MODE
 
@@ -38,6 +38,8 @@ PKG_CHECK_MODULES(DEP, x11 xext xextproto panoramixproto)
 AC_SUBST(DEP_CFLAGS)
 AC_SUBST(DEP_LIBS)
 		  
+XORG_RELEASE_VERSION
+
 AC_OUTPUT([Makefile
 	   src/Makefile
            xinerama.pc])
