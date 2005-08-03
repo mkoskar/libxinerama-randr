@@ -6,6 +6,6 @@ includedir=@includedir@
 Name: Xinerama
 Description: The Xinerama Library
 Version: @PACKAGE_VERSION@
-Cflags: -I${includedir} @DEP_CFLAGS@
-Libs: -L${libdir} -lXinerama @DEP_LIBS@
+Cflags: -I${includedir} @XINERAMA_CFLAGS@
+Libs: -L${libdir} -lXinerama @XINERAMA_LIBS@
 
