@@ -33,7 +33,7 @@ AC_PROG_CC
 AC_PROG_LIBTOOL
 
 # Check for dependencies
-PKG_CHECK_MODULES(XINERAMA, x11 xext xextproto panoramixproto)
+PKG_CHECK_MODULES(XINERAMA, x11 xext xextproto xineramaproto)
 
 AC_SUBST(XINERAMA_CFLAGS)
 AC_SUBST(XINERAMA_LIBS)
