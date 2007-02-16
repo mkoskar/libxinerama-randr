@@ -26,3 +26,7 @@ pkgconfig_DATA = xinerama.pc
 
 EXTRA_DIST = xinerama.pc.in autogen.sh
 
+if LINT
+lint:
+	(cd src && $(MAKE) $(MFLAGS) lint)
+endif LINT
