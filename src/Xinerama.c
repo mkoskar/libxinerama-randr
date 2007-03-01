@@ -267,8 +267,6 @@ Bool XineramaIsActive(Display *dpy)
     return rep.state;
 }
 
-#include <stdio.h>
-
 XineramaScreenInfo * 
 XineramaQueryScreens(
    Display *dpy,
