@@ -47,8 +47,10 @@ XORG_WITH_LINT
 LINT_FLAGS="${LINT_FLAGS} ${XINERAMA_CFLAGS}"
 		  
 XORG_CHECK_MALLOC_ZERO
+XORG_MANPAGE_SECTIONS
 XORG_RELEASE_VERSION
 
 AC_OUTPUT([Makefile
 	   src/Makefile
+	   man/Makefile
            xinerama.pc])
