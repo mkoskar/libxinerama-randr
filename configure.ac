@@ -26,19 +26,19 @@ AC_INIT(libXinerama, 1.0.3, [https://bugs.freedesktop.org/enter_bug.cgi?product=
 AM_INIT_AUTOMAKE([dist-bzip2])
 AM_MAINTAINER_MODE
 
+# Require xorg-macros: XORG_CWARNFLAGS, XORG_CHANGELOG, XORG_WITH_LINT
+m4_ifndef([XORG_MACROS_VERSION], [AC_FATAL([must install xorg-macros 1.2 or later before running autoconf/autogen])])
+XORG_MACROS_VERSION(1.2)
 AM_CONFIG_HEADER(config.h)
-
-# Require xorg-macros version 1.1.0 or newer for XORG_WITH_LINT macro
-m4_ifndef([XORG_MACROS_VERSION], [AC_FATAL([must install xorg-macros 1.1 or later])])
-XORG_MACROS_VERSION(1.1)
 
 # Check for progs
 AC_PROG_CC
 AC_PROG_LIBTOOL
+XORG_CWARNFLAGS
 
 # Check for dependencies
 PKG_CHECK_MODULES(XINERAMA, x11 xext xextproto xineramaproto)
-
+XINERAMA_CFLAGS="$CWARNFLAGS $XINERAMA_CFLAGS"
 AC_SUBST(XINERAMA_CFLAGS)
 AC_SUBST(XINERAMA_LIBS)
 
@@ -49,6 +49,7 @@ LINT_FLAGS="${LINT_FLAGS} ${XINERAMA_CFLAGS}"
 XORG_CHECK_MALLOC_ZERO
 XORG_MANPAGE_SECTIONS
 XORG_RELEASE_VERSION
+XORG_CHANGELOG
 
 AC_OUTPUT([Makefile
 	   src/Makefile

@@ -1,3 +1,5 @@
+.deps
+.libs
 aclocal.m4
 autom4te.cache
 config.guess
@@ -19,3 +21,10 @@ mkinstalldirs
 stamp-h1
 xinerama.pc
 *~
+*.3
+*.o
+*.la
+*.lo
+libXinerama-*.tar.*
+ChangeLog
+tags

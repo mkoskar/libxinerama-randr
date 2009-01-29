@@ -28,6 +28,9 @@ Equipment Corporation.
 
 /* THIS IS NOT AN X PROJECT TEAM SPECIFICATION */
 
+#ifndef _panoramiXext_h
+#define _panoramiXext_h
+
 #define PANORAMIX_MAJOR_VERSION         1       /* current version number */
 #define PANORAMIX_MINOR_VERSION         1
 
@@ -41,6 +44,39 @@ typedef struct {
     XID     eventMask;      /* selected events for this client */
 } XPanoramiXInfo;    
 
+extern Bool XPanoramiXQueryExtension (
+    Display *		/* dpy */,
+    int *		/* event_base_return */,
+    int *		/* error_base_return */
+);
+
+extern Status XPanoramiXQueryVersion(
+    Display *		/* dpy */,
+    int *		/* major_version_return */,
+    int *		/* minor_version_return */
+);
+
 extern XPanoramiXInfo *XPanoramiXAllocInfo (
     void
-);        
+);
+
+extern Status XPanoramiXGetState (
+    Display *		/* dpy */,
+    Drawable		/* drawable */,
+    XPanoramiXInfo *	/* panoramiX_info */
+);
+
+extern Status XPanoramiXGetScreenCount (
+    Display *		/* dpy */,
+    Drawable		/* drawable */,
+    XPanoramiXInfo *	/* panoramiX_info */
+);
+
+extern Status XPanoramiXGetScreenSize (
+    Display *		/* dpy */,
+    Drawable		/* drawable */,
+    int			/* screen_num */,
+    XPanoramiXInfo *	/* panoramiX_info */
+);
+
+#endif /* _panoramiXext_h */
