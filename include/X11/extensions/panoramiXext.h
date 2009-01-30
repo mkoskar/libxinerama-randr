@@ -31,8 +31,12 @@ Equipment Corporation.
 #ifndef _panoramiXext_h
 #define _panoramiXext_h
 
+#include <X11/Xfuncproto.h>
+
 #define PANORAMIX_MAJOR_VERSION         1       /* current version number */
 #define PANORAMIX_MINOR_VERSION         1
+
+#ifndef _PANORAMIX_SERVER
 
 typedef struct {
     Window  window;         /* PanoramiX window - may not exist */
@@ -43,6 +47,8 @@ typedef struct {
     int     ScreenCount;    /* real physical number of screens */
     XID     eventMask;      /* selected events for this client */
 } XPanoramiXInfo;    
+
+_XFUNCPROTOBEGIN
 
 extern Bool XPanoramiXQueryExtension (
     Display *		/* dpy */,
@@ -78,5 +84,9 @@ extern Status XPanoramiXGetScreenSize (
     int			/* screen_num */,
     XPanoramiXInfo *	/* panoramiX_info */
 );
+
+_XFUNCPROTOEND
+
+#endif /* _PANORAMIX_SERVER */
 
 #endif /* _panoramiXext_h */
