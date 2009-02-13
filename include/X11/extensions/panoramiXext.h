@@ -33,11 +33,6 @@ Equipment Corporation.
 
 #include <X11/Xfuncproto.h>
 
-#define PANORAMIX_MAJOR_VERSION         1       /* current version number */
-#define PANORAMIX_MINOR_VERSION         1
-
-#ifndef _PANORAMIX_SERVER
-
 typedef struct {
     Window  window;         /* PanoramiX window - may not exist */
     int	    screen;
@@ -86,7 +81,5 @@ extern Status XPanoramiXGetScreenSize (
 );
 
 _XFUNCPROTOEND
-
-#endif /* _PANORAMIX_SERVER */
 
 #endif /* _panoramiXext_h */
