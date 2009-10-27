@@ -24,8 +24,7 @@ SUBDIRS = src man
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = xinerama.pc
 
-EXTRA_DIST = xinerama.pc.in ChangeLog
-MAINTAINERCLEANFILES = ChangeLog
+EXTRA_DIST = xinerama.pc.in 
 
 .PHONY: ChangeLog
 
