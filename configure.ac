@@ -39,9 +39,6 @@ AC_PROG_LIBTOOL
 
 # Check for dependencies
 PKG_CHECK_MODULES(XINERAMA, x11 xext xextproto [xineramaproto >= 1.1.99.1])
-XINERAMA_CFLAGS="$CWARNFLAGS $XINERAMA_CFLAGS"
-AC_SUBST(XINERAMA_CFLAGS)
-AC_SUBST(XINERAMA_LIBS)
 
 dnl Allow checking code with lint, sparse, etc.
 XORG_WITH_LINT
