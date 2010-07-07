@@ -27,14 +27,14 @@ LIB_MAN_DIR_SUFFIX = $(LIB_MAN_DIR:@mandir@/man%=%)
 
 libman_PRE = Xinerama.man
 
-BUILT_SOURCES = shadows.DONE
+BUILT_SOURCES = $(Xinerama_shadowmen)
 
 EXTRA_DIST = $(libman_PRE)
 
 CLEANFILES = $(libman_DATA) $(BUILT_SOURCES)
 
 libman_DATA = $(libman_PRE:man=@LIB_MAN_SUFFIX@) \
-	      $(Xinerama_shadows:=.@LIB_MAN_SUFFIX@)
+	      $(Xinerama_shadowmen)
 
 SUFFIXES = .$(LIB_MAN_SUFFIX) .man
 
@@ -49,8 +49,6 @@ Xinerama_shadows =		\
 	XineramaIsActive	\
 	XineramaQueryScreens
 
-shadows.DONE:
-	-rm -f $(Xinerama_shadows:=.@LIB_MAN_SUFFIX@)
-	(for i in $(Xinerama_shadows:=.@LIB_MAN_SUFFIX@) ; do \
-	 echo .so man$(LIB_MAN_DIR_SUFFIX)/Xinerama.$(LIB_MAN_SUFFIX) > $$i; \
-	 done)
+Xinerama_shadowmen = $(Xinerama_shadows:=.@LIB_MAN_SUFFIX@)
+$(Xinerama_shadowmen):
+	$(AM_V_GEN)echo ".so man$(LIB_MAN_DIR_SUFFIX)/Xinerama.$(LIB_MAN_SUFFIX)" > $@
