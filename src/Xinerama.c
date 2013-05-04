@@ -23,6 +23,10 @@ dealings in this Software without prior written authorization from Digital
 Equipment Corporation.
 ******************************************************************/
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include <X11/Xlibint.h>
 #include <X11/Xutil.h>
 #include <X11/extensions/Xext.h>
@@ -31,6 +35,19 @@ Equipment Corporation.
 #include <X11/extensions/panoramiXproto.h>
 #include <X11/extensions/Xinerama.h>
 
+#ifndef HAVE__XEATDATAWORDS
+#include <X11/Xmd.h>  /* for LONG64 on 64-bit platforms */
+#include <limits.h>
+
+static inline void _XEatDataWords(Display *dpy, unsigned long n)
+{
+# ifndef LONG64
+    if (n >= (ULONG_MAX >> 2))
+        _XIOError(dpy);
+# endif
+    _XEatData (dpy, n << 2);
+}
+#endif
 
 static XExtensionInfo _panoramiX_ext_info_data;
 static XExtensionInfo *panoramiX_ext_info = &_panoramiX_ext_info_data;
@@ -302,7 +319,7 @@ XineramaQueryScreens(
 
 	    *number = rep.number;
 	} else
-	    _XEatData(dpy, rep.length << 2);
+	    _XEatDataWords(dpy, rep.length);
     } else {
 	*number = 0;
     }
