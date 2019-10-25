@@ -35,6 +35,8 @@ Equipment Corporation.
 #include <X11/extensions/panoramiXproto.h>
 #include <X11/extensions/Xinerama.h>
 
+#include <X11/extensions/Xrandr.h>
+
 static XExtensionInfo _panoramiX_ext_info_data;
 static XExtensionInfo *panoramiX_ext_info = &_panoramiX_ext_info_data;
 static const char *panoramiX_extension_name = PANORAMIX_PROTOCOL_NAME;
@@ -231,7 +233,9 @@ Bool XineramaQueryExtension (
    int     *error_base_return
 )
 {
-   return XPanoramiXQueryExtension(dpy, event_base_return, error_base_return);
+    *event_base_return = 0;
+    *error_base_return = 0;
+    return True;
 }
 
 Status XineramaQueryVersion(
@@ -240,30 +244,14 @@ Status XineramaQueryVersion(
    int     *minor
 )
 {
-   return XPanoramiXQueryVersion(dpy, major, minor);
+    *major = 1;
+    *minor = 1;
+    return 1;
 }
 
 Bool XineramaIsActive(Display *dpy)
 {
-    xXineramaIsActiveReply	rep;
-    xXineramaIsActiveReq  	*req;
-    XExtDisplayInfo 		*info = find_display (dpy);
-
-    if(!XextHasExtension(info))
-	return False;  /* server doesn't even have the extension */
-
-    LockDisplay (dpy);
-    GetReq (XineramaIsActive, req);
-    req->reqType = info->codes->major_opcode;
-    req->panoramiXReqType = X_XineramaIsActive;
-    if (!_XReply (dpy, (xReply *) &rep, 0, xTrue)) {
-	UnlockDisplay (dpy);
-	SyncHandle ();
-	return False;
-    }
-    UnlockDisplay (dpy);
-    SyncHandle ();
-    return rep.state;
+    return True;
 }
 
 XineramaScreenInfo *
@@ -272,58 +260,33 @@ XineramaQueryScreens(
    int     *number
 )
 {
-    XExtDisplayInfo		*info = find_display (dpy);
-    xXineramaQueryScreensReply	rep;
-    xXineramaQueryScreensReq	*req;
-    XineramaScreenInfo		*scrnInfo = NULL;
+    int screen;
+    int nmonitors;
+    Window root;
+    XRRMonitorInfo *monInfo;
+    XineramaScreenInfo *scrnInfo = NULL;
 
-    PanoramiXCheckExtension (dpy, info, NULL);
-
-    LockDisplay (dpy);
-    GetReq (XineramaQueryScreens, req);
-    req->reqType = info->codes->major_opcode;
-    req->panoramiXReqType = X_XineramaQueryScreens;
-    if (!_XReply (dpy, (xReply *) &rep, 0, xFalse)) {
-	UnlockDisplay (dpy);
-	SyncHandle ();
-	*number = 0;
-	return NULL;
+    screen = DefaultScreen(dpy);
+    root = RootWindow(dpy, screen);
+    monInfo = XRRGetMonitors(dpy, root, True, &nmonitors);
+    if (monInfo != NULL) {
+        if ((nmonitors > 0) && (nmonitors <= 1024))
+            scrnInfo = Xmalloc(sizeof(XineramaScreenInfo) * nmonitors);
+        if (scrnInfo != NULL) {
+            int i;
+            for (i = 0; i < nmonitors; i++) {
+                scrnInfo[i].screen_number = i;
+                scrnInfo[i].x_org = monInfo[i].x;
+                scrnInfo[i].y_org = monInfo[i].y;
+                scrnInfo[i].width = monInfo[i].width;
+                scrnInfo[i].height = monInfo[i].height;
+            }
+            *number = nmonitors;
+        } else {
+            *number = 0;
+        }
+        XFree(monInfo);
     }
 
-    /*
-     * rep.number is a CARD32 so could be as large as 2^32
-     * The X11 protocol limits the total screen size to 64k x 64k,
-     * and no screen can be smaller than a pixel.  While technically
-     * that means we could theoretically reach 2^32 screens, and that's
-     * not even taking overlap into account, Xorg is currently limited
-     * to 16 screens, and few known servers have a much higher limit,
-     * so 1024 seems more than enough to prevent both integer overflow
-     * and insane X server responses causing massive memory allocation.
-     */
-    if ((rep.number > 0) && (rep.number <= 1024))
-	scrnInfo = Xmalloc(sizeof(XineramaScreenInfo) * rep.number);
-    if (scrnInfo != NULL) {
-	int i;
-
-	for (i = 0; i < rep.number; i++) {
-	    xXineramaScreenInfo scratch;
-
-	    _XRead(dpy, (char*)(&scratch), sz_XineramaScreenInfo);
-
-	    scrnInfo[i].screen_number = i;
-	    scrnInfo[i].x_org	= scratch.x_org;
-	    scrnInfo[i].y_org	= scratch.y_org;
-	    scrnInfo[i].width	= scratch.width;
-	    scrnInfo[i].height	= scratch.height;
-	}
-
-	*number = rep.number;
-    } else {
-	_XEatDataWords(dpy, rep.length);
-	*number = 0;
-    }
-
-    UnlockDisplay (dpy);
-    SyncHandle ();
     return scrnInfo;
 }

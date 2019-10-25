@@ -40,7 +40,7 @@ XORG_DEFAULT_OPTIONS
 XORG_CHECK_MALLOC_ZERO
 
 # Obtain compiler/linker options for depedencies
-PKG_CHECK_MODULES(XINERAMA, [x11 >= 1.6] xext xextproto [xineramaproto >= 1.1.99.1])
+PKG_CHECK_MODULES(XINERAMA, [x11 >= 1.6] xext xextproto [xineramaproto >= 1.1.99.1] [xrandr >= 1.5])
 
 # Allow checking code with lint, sparse, etc.
 XORG_WITH_LINT
