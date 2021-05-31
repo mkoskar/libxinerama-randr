@@ -8,19 +8,20 @@ XINERAMA X extension present (such as multiple X screens aka Zaphod mode).
 
 You can setup ``Xorg(1)`` in multiple ways:
 
-"Big Desktop" setup:
+1) "Big Desktop" setup:
 
 * single X screen: 0
 * RANDR present
 * XINERAMA present
 
-"Zaphod" setup:
+2) "Zaphod" setup:
 
+* multiple "Screen" sections included in "ServerLayout"
 * multiple X screens: 0, 1, ...
 * RANDR present
 * XINERAMA **missing**
 
-"Xinerama" setup:
+3) "Xinerama" setup:
 
 * multiple "Screen" sections included in "ServerLayout" with "Xinerama" option
 * single X screen: 0
